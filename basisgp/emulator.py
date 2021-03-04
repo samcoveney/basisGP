@@ -107,6 +107,8 @@ class Emulator:
         """Unscales and uncenteres y data into original scale."""
         offset = 0 if stdev == True else self.y_mean
 
+        y = jnp.atleast_1d(y)
+
         if y.ndim > 1 and stdev == True: # this is for unscaling the variance matrix
             return ( (y * self.y_std**2) )
         else:

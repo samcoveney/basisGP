@@ -86,6 +86,7 @@ class Emulator:
         """Set data for interpolation, scaled and centred."""
 
         # save inputs
+        if x.ndim == 1: x = x[:,None]
         self.x = x
 
         # save outputs, centred and scaled
@@ -127,9 +128,6 @@ class Emulator:
         else:
             save_self_H = False
         
-        # make sure matrix X is 2D
-        if X.shape[1] == 1: X = X[:,None]
-
         # build H matrix
         H = self.basis(X)
         
@@ -351,14 +349,13 @@ class Emulator:
         else:
             s2 = (1.0/(n-m-0))*( jnp.dot(L_y.T, L_y) - B )
 
-        self.sigma = np.sqrt(s2)
-
 
         # save important values
         self.L, self.LQ = L, LQ
         self.L_H = L_H
         self.L_T = jst(L, y - jnp.dot(H, beta), lower = True)
         self.beta = beta
+        self.sigma = np.sqrt(s2)
 
         return
     #}}}
@@ -372,6 +369,8 @@ class Emulator:
            If not returning full covariance matrix, then mean and stdev are returned.
 
         """
+
+        if X.ndim == 1: X = X[:,None]
 
         if X.shape[1] != self.x.shape[1]:
             print("[ERROR]: inputs features do not match training data.")

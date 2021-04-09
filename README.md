@@ -46,3 +46,8 @@ Notes:
 * it may be necessary to fix the nugget to a very small value for numerical stability even when observations are noiseless.
 
 
+## Notes
+
+* 09/04/2021: A fairly recent issue in JAX (which may now be solved) may cause issues, solveable by installing an earlier version of JAX. See here: https://github.com/google-research/long-range-arena/issues/7
+
+
